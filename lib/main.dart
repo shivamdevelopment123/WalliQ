@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:walliq/pages/bottom_navigation.dart';
-import 'package:walliq/pages/home.dart';
+import 'package:walliq/providers/wallpaper_provider.dart';
+import 'package:walliq/services/pexel_api.dart';
 
 void main() {
-  runApp(const MyApp());
+  const pexelsKey = '';
+  runApp(const MyApp(pexelsKey: pexelsKey));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String pexelsKey;
+  const MyApp({super.key, required this.pexelsKey});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    final api = PexelsApi(apiKey: pexelsKey);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => WallpaperProvider(api: api)),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        home: const BottomNavigation(),
       ),
-      home: const BottomNavigation(),
     );
   }
 }
