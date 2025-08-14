@@ -42,6 +42,12 @@ dependencies:
   provider: ^6.1.5
   cached_network_image: ^3.4.1
   flutter_dotenv: ^5.2.1
+  path_provider: ^2.1.5
+  wallpaper_manager_flutter: ^1.0.1
+  android_intent_plus: ^5.3.1
+  gallery_saver_plus: ^3.2.8
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

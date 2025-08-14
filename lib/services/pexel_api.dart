@@ -13,7 +13,7 @@ class PexelsApi{
     'Authorization' : apiKey
   };
 
-  Future<List<WallpaperModel>> curated({int perPage = 20, int page = 1}) async {
+  Future<List<WallpaperModel>> curated({int perPage = 8, int page = 1}) async {
     final uri = Uri.parse('$baseUrl/curated')
         .replace(queryParameters: {
       'per_page': perPage.toString(),
@@ -53,7 +53,7 @@ class PexelsApi{
     }
   }
 
-  Future<List<WallpaperModel>> popular({int perPage = 20, int page = 1}) async {
+  Future<List<WallpaperModel>> popular({int perPage = 8, int page = 1}) async {
     final uri = Uri.parse('$baseUrl/popular')
         .replace(queryParameters: {
       'per_page': perPage.toString(),
@@ -73,7 +73,7 @@ class PexelsApi{
     }
   }
 
-  Future<List<WallpaperModel>> categoryWallpapers(String category, {int perPage = 20, int page = 1}) async {
+  Future<List<WallpaperModel>> categoryWallpapers(String category, {int perPage = 10, int page = 1}) async {
     final uri = Uri.parse('$baseUrl/search')
         .replace(queryParameters: {
       'query': category,

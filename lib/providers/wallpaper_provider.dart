@@ -23,7 +23,7 @@ class WallpaperProvider extends ChangeNotifier{
     }
     notifyListeners();
     try{
-      final results = await api.curated(perPage: 10, page: curatedPage);
+      final results = await api.curated(perPage: 8, page: curatedPage);
       if(results.isEmpty){
         hasMoreCurated = false;
       }else{
@@ -47,7 +47,7 @@ class WallpaperProvider extends ChangeNotifier{
     searching = true;
     notifyListeners();
     try{
-      final results = await api.search(query, perPage: 30,page: page);
+      final results = await api.search(query, perPage: 20,page: page);
       if(page == 1) {
         searchResults = results;
       } else {
@@ -70,7 +70,7 @@ class WallpaperProvider extends ChangeNotifier{
     loadingTopRated = true;
     notifyListeners();
     try {
-      topRated = await api.popular(perPage: 10);
+      topRated = await api.popular(perPage: 8);
       error = null;
     } catch (e) {
       error = e.toString();

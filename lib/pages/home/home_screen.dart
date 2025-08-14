@@ -89,42 +89,47 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 SizedBox(height: 10),
+
                 // "Latest" Section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Latest',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => WallpaperListScreen(
-                                title: 'L A T E S T',
-                                fetchFunction: (page) =>
-                                    prov.api.curated(perPage: 14, page: page),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'See all',
+                Container(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Latest',
                           style: TextStyle(
+                            fontSize: 18,
                             fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ),
-                    ],
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => WallpaperListScreen(
+                                  title: 'L A T E S T',
+                                  fetchFunction: (page) =>
+                                      prov.api.curated(perPage: 14, page: page),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'See all',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.inversePrimary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 GridView.builder(
@@ -154,42 +159,44 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 10),
                 // "Top Rated" Section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Popular',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Navigate to full top-rated list
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => WallpaperListScreen(
-                                title: 'P O P U L A R',
-                                fetchFunction: (page) =>
-                                    prov.api.popular(perPage: 14),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'See all',
+                Container(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Popular',
                           style: TextStyle(
+                            fontSize: 18,
                             fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ),
-                    ],
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => WallpaperListScreen(
+                                  title: 'P O P U L A R',
+                                  fetchFunction: (page) =>
+                                      prov.api.popular(perPage: 14),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'See all',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 GridView.builder(

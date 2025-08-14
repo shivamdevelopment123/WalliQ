@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:walliq/pages/bottom_navigation.dart';
 import 'package:walliq/providers/wallpaper_provider.dart';
@@ -10,6 +11,8 @@ import 'package:walliq/themes/light_mode.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await Hive.initFlutter();
+  await Hive.openBox('favorites');
 
   final pexelsKey = dotenv.env['PEXELS_API_KEY'] ?? '';
   runApp(MyApp(pexelsKey: pexelsKey));
