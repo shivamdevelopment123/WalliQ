@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/wallpaper_provider.dart';
-import '../widgets/wallpaper_card.dart';
+import 'package:walliq/pages/reusable_screens/wallpaper_fullscreen.dart';
+import 'package:walliq/pages/reusable_screens/wallpaper_list_screen.dart';
+import '../../providers/wallpaper_provider.dart';
+import '../../widgets/wallpaper_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -59,7 +61,13 @@ class _HomeState extends State<Home> {
                         child: WallpaperCard(
                           wallpaper: w,
                           onTap: () {
-                            // Push to detail preview
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    WallpaperFullscreen(wallpaper: w),
+                              ),
+                            );
                           },
                           borderRadius: 16,
                         ),
@@ -87,6 +95,16 @@ class _HomeState extends State<Home> {
                       TextButton(
                         onPressed: () {
                           // Navigate to full curated list page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => WallpaperListScreen(
+                                title: 'C U R A T E D',
+                                fetchFunction: (page) =>
+                                    prov.api.curated(perPage: 14, page: page),
+                              ),
+                            ),
+                          );
                         },
                         child: Text('See all'),
                       ),
@@ -108,6 +126,13 @@ class _HomeState extends State<Home> {
                     wallpaper: curated[i],
                     onTap: () {
                       // Navigate to detail preview
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              WallpaperFullscreen(wallpaper: curated[i]),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -119,12 +144,22 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Top Rated',
+                        'Popular',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       TextButton(
                         onPressed: () {
                           // Navigate to full top-rated list
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => WallpaperListScreen(
+                                title: 'P O P U L A R',
+                                fetchFunction: (page) =>
+                                    prov.api.popular(perPage: 14),
+                              ),
+                            ),
+                          );
                         },
                         child: Text('See all'),
                       ),
@@ -146,6 +181,13 @@ class _HomeState extends State<Home> {
                     wallpaper: topRated[i],
                     onTap: () {
                       // Navigate to detail preview
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              WallpaperFullscreen(wallpaper: topRated[i]),
+                        ),
+                      );
                     },
                   ),
                 ),

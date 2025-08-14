@@ -54,4 +54,17 @@ class PexelsApi{
     }
   }
 
+  Future<List<WallpaperModel>> categoryWallpapers(String category, {int perPage = 20, int page = 1}) async {
+    final uri = Uri.parse('$baseUrl/search?query=${Uri.encodeComponent(category)}&per_page=$perPage&page=$page');
+    final response = await http.get(uri, headers: headers);
+
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      final photos = body['photos'] as List<dynamic>;
+      return photos.map((p) => WallpaperModel.fromJson(p)).toList();
+    } else {
+      debugPrint('Pexels category error: ${response.statusCode}');
+      throw Exception('Failed to load category wallpapers');
+    }
+  }
 }

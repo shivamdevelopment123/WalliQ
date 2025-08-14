@@ -23,7 +23,7 @@ class WallpaperProvider extends ChangeNotifier{
     }
     notifyListeners();
     try{
-      final results = await api.curated(perPage: 15, page: curatedPage);
+      final results = await api.curated(perPage: 10, page: curatedPage);
       if(results.isEmpty){
         hasMoreCurated = false;
       }else{
@@ -76,6 +76,41 @@ class WallpaperProvider extends ChangeNotifier{
       error = e.toString();
     } finally {
       loadingTopRated = false;
+      notifyListeners();
+    }
+  }
+
+  // Category storage
+  Map<String, List<WallpaperModel>> categoryResults = {};
+  Map<String, bool> loadingCategory = {};
+  Map<String, bool> hasMoreCategory = {};
+  Map<String, int> categoryPage = {};
+
+// Fetch category wallpapers
+  Future<List<WallpaperModel>> fetchCategory(String category, {bool refresh = false, int perPage = 20, int page = 1}) async {
+    loadingCategory[category] = true;
+    notifyListeners();
+
+    try {
+      final results = await api.search(category, perPage: perPage, page: page);
+
+      if (refresh || !categoryResults.containsKey(category)) {
+        categoryResults[category] = results;
+        categoryPage[category] = 2;
+      } else {
+        categoryResults[category]!.addAll(results);
+        categoryPage[category] = (categoryPage[category] ?? 1) + 1;
+      }
+
+      hasMoreCategory[category] = results.isNotEmpty;
+      error = null;
+
+      return results; // ✅ Now returns List<WallpaperModel>
+    } catch (e) {
+      error = e.toString();
+      return []; // Return empty list on error
+    } finally {
+      loadingCategory[category] = false;
       notifyListeners();
     }
   }

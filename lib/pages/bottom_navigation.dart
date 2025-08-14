@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:walliq/pages/home.dart';
-import 'package:walliq/pages/search.dart';
-import 'categories.dart';
+import 'package:walliq/pages/home/home_screen.dart';
+import 'package:walliq/pages/search/search_screen.dart';
+import 'category/categories_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
