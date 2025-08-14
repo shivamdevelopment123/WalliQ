@@ -14,7 +14,13 @@ class PexelsApi{
   };
 
   Future<List<WallpaperModel>> curated({int perPage = 20, int page = 1}) async {
-    final uri = Uri.parse('$baseUrl/curated?per_page=$perPage&page=$page');
+    final uri = Uri.parse('$baseUrl/curated')
+        .replace(queryParameters: {
+      'per_page': perPage.toString(),
+      'page': page.toString(),
+      'orientation': 'portrait',
+      'size': 'large',
+    });
     final response = await http.get(uri, headers: headers);
 
     if(response.statusCode == 200){
@@ -28,7 +34,14 @@ class PexelsApi{
   }
 
   Future<List<WallpaperModel>> search(String query, {int perPage = 20, int page = 1}) async {
-    final uri = Uri.parse('$baseUrl/search?query=${Uri.encodeComponent(query)}&per_page=$perPage&page=$page');
+    final uri = Uri.parse('$baseUrl/search')
+        .replace(queryParameters: {
+      'query': query,
+      'per_page': perPage.toString(),
+      'page': page.toString(),
+      'orientation': 'portrait',
+      'size': 'large',
+    });
     final  response = await http.get(uri, headers: headers);
     if(response.statusCode == 200){
       final body = json.decode(response.body);
@@ -41,7 +54,13 @@ class PexelsApi{
   }
 
   Future<List<WallpaperModel>> popular({int perPage = 20, int page = 1}) async {
-    final uri = Uri.parse('$baseUrl/popular?per_page=$perPage&page=$page');
+    final uri = Uri.parse('$baseUrl/popular')
+        .replace(queryParameters: {
+      'per_page': perPage.toString(),
+      'page': page.toString(),
+      'orientation': 'portrait',
+      'size': 'large',
+    });
     final response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {
@@ -55,7 +74,14 @@ class PexelsApi{
   }
 
   Future<List<WallpaperModel>> categoryWallpapers(String category, {int perPage = 20, int page = 1}) async {
-    final uri = Uri.parse('$baseUrl/search?query=${Uri.encodeComponent(category)}&per_page=$perPage&page=$page');
+    final uri = Uri.parse('$baseUrl/search')
+        .replace(queryParameters: {
+      'query': category,
+      'per_page': perPage.toString(),
+      'page': page.toString(),
+      'orientation': 'portrait',
+      'size': 'large',
+    });
     final response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {

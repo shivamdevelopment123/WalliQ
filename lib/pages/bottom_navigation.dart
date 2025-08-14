@@ -32,22 +32,24 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        extendBody: true,
         bottomNavigationBar: CurvedNavigationBar(
-            backgroundColor: Colors.white,
-            color: Colors.blueAccent,
-            height: 50,
-            animationCurve: Curves.easeInOut,
-            animationDuration: Duration(milliseconds: 600),
+          backgroundColor: Colors.transparent,
+          color: Theme.of(context).colorScheme.inverseSurface,
+          height: 50,
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
           onTap: (int index) {
             setState(() {
               currentPage = pages[index];
             });
           },
-            items: [
-          Icon(Icons.home_outlined),
-          Icon(Icons.search_outlined),
-          Icon(Icons.category_outlined),
-        ]),
+          items: [
+            Icon(Icons.home_outlined),
+            Icon(Icons.search_outlined),
+            Icon(Icons.category_outlined),
+          ],
+        ),
         body: currentPage,
       ),
     );

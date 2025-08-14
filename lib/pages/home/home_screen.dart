@@ -27,8 +27,12 @@ class _HomeState extends State<Home> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('WalliQ', style: TextStyle(fontFamily: 'Poppins')),
+        title: Text(
+          'WalliQ',
+          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600),
+        ),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
+        elevation: 8,
       ),
       body: Consumer<WallpaperProvider>(
         builder: (context, prov, _) {
@@ -48,7 +52,7 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 12),
+                SizedBox(height: 8),
                 CarouselSlider.builder(
                   carouselController: _controller,
                   itemCount: curated.length,
@@ -75,13 +79,16 @@ class _HomeState extends State<Home> {
                     );
                   },
                   options: CarouselOptions(
-                    height: screenHeight * 0.45,
+                    height: screenHeight * 0.39,
                     enlargeCenterPage: true,
                     autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 5),
+                    enlargeFactor: 0.3,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    viewportFraction: 0.6,
+                    autoPlayInterval: Duration(seconds: 4),
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 10),
                 // "Latest" Section
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -90,23 +97,32 @@ class _HomeState extends State<Home> {
                     children: [
                       Text(
                         'Latest',
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
-                          // Navigate to full curated list page
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => WallpaperListScreen(
-                                title: 'C U R A T E D',
+                                title: 'L A T E S T',
                                 fetchFunction: (page) =>
                                     prov.api.curated(perPage: 14, page: page),
                               ),
                             ),
                           );
                         },
-                        child: Text('See all'),
+                        child: Text(
+                          'See all',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -136,7 +152,7 @@ class _HomeState extends State<Home> {
                     },
                   ),
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 10),
                 // "Top Rated" Section
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -145,7 +161,11 @@ class _HomeState extends State<Home> {
                     children: [
                       Text(
                         'Popular',
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -161,7 +181,13 @@ class _HomeState extends State<Home> {
                             ),
                           );
                         },
-                        child: Text('See all'),
+                        child: Text(
+                          'See all',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                     ],
                   ),

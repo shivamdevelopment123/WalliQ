@@ -23,12 +23,14 @@ class _SearchState extends State<Search> {
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 200 &&
+              _scrollController.position.maxScrollExtent - 200 &&
           !Provider.of<WallpaperProvider>(context, listen: false).searching &&
           _currentQuery.isNotEmpty) {
         _page++;
-        Provider.of<WallpaperProvider>(context, listen: false)
-            .search(_currentQuery, page: _page);
+        Provider.of<WallpaperProvider>(
+          context,
+          listen: false,
+        ).search(_currentQuery, page: _page);
       }
     });
   }
@@ -39,14 +41,17 @@ class _SearchState extends State<Search> {
       _currentQuery = query.trim();
       _page = 1;
     });
-    Provider.of<WallpaperProvider>(context, listen: false)
-        .search(_currentQuery, page: _page);
+    Provider.of<WallpaperProvider>(
+      context,
+      listen: false,
+    ).search(_currentQuery, page: _page);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 8,
         title: TextField(
           controller: _controller,
           decoration: InputDecoration(
@@ -102,8 +107,7 @@ class _SearchState extends State<Search> {
               mainAxisSpacing: 8,
               childAspectRatio: 0.66,
             ),
-            itemCount:
-            prov.searchResults.length + (prov.searching ? 1 : 0),
+            itemCount: prov.searchResults.length + (prov.searching ? 1 : 0),
             itemBuilder: (context, i) {
               if (i >= prov.searchResults.length) {
                 return const Center(child: CircularProgressIndicator());
@@ -127,4 +131,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
-

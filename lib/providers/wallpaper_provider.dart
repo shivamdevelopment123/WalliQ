@@ -114,5 +114,4 @@ class WallpaperProvider extends ChangeNotifier{
       notifyListeners();
     }
   }
-
 }

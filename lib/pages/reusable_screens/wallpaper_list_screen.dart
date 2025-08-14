@@ -6,7 +6,11 @@ import 'package:walliq/widgets/wallpaper_card.dart';
 class WallpaperListScreen extends StatefulWidget {
   final String title;
   final Future<List<WallpaperModel>> Function(int page) fetchFunction;
-  const WallpaperListScreen({super.key, required this.title, required this.fetchFunction});
+  const WallpaperListScreen({
+    super.key,
+    required this.title,
+    required this.fetchFunction,
+  });
 
   @override
   State<WallpaperListScreen> createState() => _WallpaperListScreenState();
@@ -26,7 +30,8 @@ class _WallpaperListScreenState extends State<WallpaperListScreen> {
     _fetchWallpapers();
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 300 &&
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent - 300 &&
           !isLoading &&
           hasMore) {
         _fetchWallpapers();
@@ -38,21 +43,21 @@ class _WallpaperListScreenState extends State<WallpaperListScreen> {
     setState(() {
       isLoading = true;
     });
-    try{
+    try {
       final newWallpapers = await widget.fetchFunction(currentPage);
-      if(newWallpapers.isEmpty){
+      if (newWallpapers.isEmpty) {
         setState(() {
           hasMore = false;
         });
-      }else{
+      } else {
         setState(() {
           wallpapers.addAll(newWallpapers);
           currentPage++;
         });
       }
-    }catch (e){
+    } catch (e) {
       debugPrint('Error fetching wallpapers: $e');
-    }finally {
+    } finally {
       setState(() {
         isLoading = false;
       });
@@ -63,33 +68,43 @@ class _WallpaperListScreenState extends State<WallpaperListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title, style: TextStyle(fontFamily: 'Poppins')),
+        title: Text(
+          widget.title,
+          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
+        elevation: 8,
       ),
       body: wallpapers.isEmpty && isLoading
-      ? Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : GridView.builder(
-        controller: _scrollController,
-          padding: const EdgeInsets.all(12.0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 0.66,
-          ),
-          itemCount: wallpapers.length + (isLoading ? 1: 0),
-          itemBuilder: (context, index) {
-          if(index >= wallpapers.length){
-            return Center(child: CircularProgressIndicator());
-          }
-          return WallpaperCard(wallpaper: wallpapers[index],
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => WallpaperFullscreen(wallpaper: wallpapers[index]),)
+              controller: _scrollController,
+              padding: const EdgeInsets.all(12.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 0.66,
+              ),
+              itemCount: wallpapers.length + (isLoading ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index >= wallpapers.length) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return WallpaperCard(
+                  wallpaper: wallpapers[index],
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            WallpaperFullscreen(wallpaper: wallpapers[index]),
+                      ),
+                    );
+                  },
                 );
-          }
-          );
-          })
+              },
+            ),
     );
   }
 }
